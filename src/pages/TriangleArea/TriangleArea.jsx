@@ -2,31 +2,29 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import digitsOnly from "../../utils/validation/string/digitsOnly";
-import positiveNumber from "../../utils/validation/string/positiveNumber";
-import "./Triangle.scss";
+import "./TriangleArea.scss";
 
 import Button from "../../components/Button/Button";
 import TextArea from "../../components/TextArea/TextArea";
 
 function getTriangleType(sideA, sideB, sideC) {
-	return sideC**2 == sideA**2 + sideB**2 || sideA**2 == sideB**2 + sideC**2 || sideB**2 == sideA**2 + sideC**2
+	return sideC ** 2 == sideA ** 2 + sideB ** 2 ||
+		sideA ** 2 == sideB ** 2 + sideC ** 2 ||
+		sideB ** 2 == sideA ** 2 + sideC ** 2
 		? "Прямоугольный треугольник"
-		: sideC**2 > sideA**2 + sideB**2 || sideA**2 > sideB**2 + sideC**2 || sideB**2 > sideA**2 + sideC**2
+		: sideC ** 2 > sideA ** 2 + sideB ** 2 ||
+		  sideA ** 2 > sideB ** 2 + sideC ** 2 ||
+		  sideB ** 2 > sideA ** 2 + sideC ** 2
 		? "Тупоугольный треугольник"
 		: "Остроугольный треугольник";
-		
-		
-		
 }
 
-function getTriangleView(sideA, sideB, sideC)
-{
-	return sideC==sideA==sideB
-	? " (Равносторонний треугольник)"
-	: sideA===sideB || sideA===sideC || sideB===sideC
-	? " (Равнобедренный треугольник)"
-	: " (Разносторонний треугольник)" ;
+function getTriangleView(sideA, sideB, sideC) {
+	return (sideC == sideA) == sideB
+		? " (Равносторонний треугольник)"
+		: sideA === sideB || sideA === sideC || sideB === sideC
+		? " (Равнобедренный треугольник)"
+		: " (Разносторонний треугольник)";
 }
 
 const validationSchema = yup
@@ -73,7 +71,7 @@ const fields = [
 	},
 ];
 
-const Triangle = () => {
+const TriangleArea = () => {
 	const [answer, setAnswer] = useState(null);
 	const [quest, setQuest] = useState(null);
 	const {
@@ -92,8 +90,10 @@ const Triangle = () => {
 	});
 	const fieldValues = watch();
 	const onSubmit = ({ sideA, sideB, sideC }) =>
-		setAnswer(getTriangleType(sideA, sideB, sideC),setQuest(getTriangleView(sideA, sideB, sideC)));
-
+		setAnswer(
+			getTriangleType(sideA, sideB, sideC),
+			setQuest(getTriangleView(sideA, sideB, sideC))
+		);
 
 	return (
 		<div className="triangle">
@@ -119,14 +119,13 @@ const Triangle = () => {
 				</form>
 				<div className="triangle__answer">
 					<h2>Ответ:</h2>
-						{answer} 
-						
-						{quest} 
-					
+					{answer}
+
+					{quest}
 				</div>
 			</div>
 		</div>
 	);
 };
 
-export default Triangle;
+export default TriangleArea;

@@ -33,7 +33,7 @@ const Navigation = () => {
 		},
 		{
 			name: "Площадь прямоугольника",
-			to: "/",
+			to: "/trianglearea",
 		},
 		{
 			name: "Регистрационный знак",
