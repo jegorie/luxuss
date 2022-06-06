@@ -20,7 +20,7 @@ function getTriangleType(sideA, sideB, sideC) {
 }
 
 function getTriangleView(sideA, sideB, sideC) {
-	return (sideC == sideA) == sideB
+	return sideA === sideB && sideA === sideC || sideB === sideC
 		? " (Равносторонний треугольник)"
 		: sideA === sideB || sideA === sideC || sideB === sideC
 		? " (Равнобедренный треугольник)"
