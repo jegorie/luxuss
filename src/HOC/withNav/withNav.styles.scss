@@ -1,0 +1,10 @@
+.withNav {
+	display: flex;
+
+	&__component {
+		display: flex;
+		justify-content: center;
+		flex: 1;
+		margin-top: 80px;
+	}
+}

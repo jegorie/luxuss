@@ -1,0 +1,53 @@
+.main {	
+	overflow-y: hidden;
+	background: #223843;
+	background: radial-gradient(91.99% 91.99% at 79.86% 0%, #365463 0%, #223843 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
+
+	.header {
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		height: 70px;
+		background: rgba($color: #FFFFFF, $alpha: 0);
+		padding: 40px 0;
+
+		svg {
+			height: 30px;
+		}
+	}
+
+	&__image {
+		position: absolute;
+		right: -204px;
+		top: 270px;
+		height: 430px;
+		width: 708px;
+	}
+
+	&__content {
+		height: calc(100vh - 210px);
+		padding-top: 210px;
+		position: relative;
+
+		.button {
+			margin-top: 80px;
+			height: 48px;
+			max-width: 380px;
+		}
+
+		h1 {
+			margin: 0;
+			font-size: 86px;
+			font-family: "Raleway";
+			font-size: 86px;
+			color: #fff;
+			position: relative;
+			z-index: 1;
+
+			span {
+				color: #D6765C;
+			}
+		}
+	}
+}

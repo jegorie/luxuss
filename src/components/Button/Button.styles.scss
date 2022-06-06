@@ -1,0 +1,54 @@
+.button {
+	outline: none;
+	border: none;
+	padding: 0 20px;
+	border-radius: 8px;
+	font-family: "Roboto";
+	font-style: normal;
+	font-weight: 400;
+	font-size: 14px;
+
+	text-align: center;
+	letter-spacing: 0.4px;
+	background: none;
+	font-weight: 500;
+
+	&:hover {
+		cursor: pointer;
+	}
+
+	&_primary_filled {
+		background: #223843;
+		color: #fff;
+	}
+
+	&_primary_outlined {
+		border: 1px solid #223843;
+		color: #223843;
+	}
+
+	&_secondary_filled {
+		background: #d6765c;
+		color: #fff;
+	}
+
+	&_secondary_outlined {
+		border: 1px solid #d6765c;
+		color: #d6765c;
+	}
+
+	&_medium {
+		height: 42px;
+		line-height: 42px;
+	}
+
+	&_small {
+		height: 36px;
+		line-height: 36px;
+	}
+
+	&_fluid {
+		min-width: 220px;
+		width: auto;
+	}
+}
