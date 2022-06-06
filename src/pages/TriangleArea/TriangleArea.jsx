@@ -7,25 +7,15 @@ import "./TriangleArea.scss";
 import Button from "../../components/Button/Button";
 import TextArea from "../../components/TextArea/TextArea";
 
-function getTriangleType(sideA, sideB, sideC) {
-	return sideC ** 2 == sideA ** 2 + sideB ** 2 ||
-		sideA ** 2 == sideB ** 2 + sideC ** 2 ||
-		sideB ** 2 == sideA ** 2 + sideC ** 2
-		? "Прямоугольный треугольник"
-		: sideC ** 2 > sideA ** 2 + sideB ** 2 ||
-		  sideA ** 2 > sideB ** 2 + sideC ** 2 ||
-		  sideB ** 2 > sideA ** 2 + sideC ** 2
-		? "Тупоугольный треугольник"
-		: "Остроугольный треугольник";
+function getTriangleArea(sideA, sideB, sideC) {
+	let S ;
+	let p;
+	p=(sideA + sideB + sideC)/2;
+	S=Math.sqrt(p*(p-sideA)*(p-sideB)*(p-sideC));
+	return S.toFixed(2) + "(см.кв.)";
 }
 
-function getTriangleView(sideA, sideB, sideC) {
-	return (sideC == sideA) == sideB
-		? " (Равносторонний треугольник)"
-		: sideA === sideB || sideA === sideC || sideB === sideC
-		? " (Равнобедренный треугольник)"
-		: " (Разносторонний треугольник)";
-}
+
 
 const validationSchema = yup
 	.object({
@@ -73,7 +63,6 @@ const fields = [
 
 const TriangleArea = () => {
 	const [answer, setAnswer] = useState(null);
-	const [quest, setQuest] = useState(null);
 	const {
 		register,
 		handleSubmit,
@@ -91,15 +80,15 @@ const TriangleArea = () => {
 	const fieldValues = watch();
 	const onSubmit = ({ sideA, sideB, sideC }) =>
 		setAnswer(
-			getTriangleType(sideA, sideB, sideC),
-			setQuest(getTriangleView(sideA, sideB, sideC))
+			getTriangleArea(sideA, sideB, sideC)
+			
 		);
 
 	return (
 		<div className="triangle">
-			<h1>Типы треугольников</h1>
+			<h1>Площадь треугольника</h1>
 			<p>
-				Определение типа треугольника по трем его сторонам. Каждая из сторон
+				Определение площади треугольника по трем его сторонам. Каждая из сторон
 				<br />
 				задается в отдельном текстовом поле.
 			</p>
@@ -118,10 +107,13 @@ const TriangleArea = () => {
 					<Button fluid>Проверить</Button>
 				</form>
 				<div className="triangle__answer">
-					<h2>Ответ:</h2>
-					{answer}
+					<h2>Площадь треугольника:</h2>
+					<p>
+					{answer} 
+					</p>
+					
 
-					{quest}
+					
 				</div>
 			</div>
 		</div>
