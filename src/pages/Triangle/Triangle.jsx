@@ -3,11 +3,11 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import digitsOnly from "../../utils/validation/string/digitsOnly";
+import positiveNumber from "../../utils/validation/string/positiveNumber";
 import "./Triangle.scss";
 
 import Button from "../../components/Button/Button";
 import TextArea from "../../components/TextArea/TextArea";
-import positiveNumber from "../../utils/validation/string/positiveNumber";
 
 function getTriangleType(a, b, c) {
 	return (
@@ -20,20 +20,20 @@ function getTriangleType(a, b, c) {
 const validationSchema = yup
 	.object({
 		sideA: yup
-			.string()
+			.number()
+			.typeError("Введите цифры")
 			.required("Обязательное поле")
-			.test("digints only", "Только цифры", digitsOnly)
-			.test("positive number", "Только положительные цифры", positiveNumber),
+			.positive("Только положительные цифры"),
 		sideB: yup
-			.string()
+			.number()
+			.typeError("Введите цифры")
 			.required("Обязательное поле")
-			.test("digints only", "Только цифры", digitsOnly)
-			.test("positive number", "Только положительные цифры", positiveNumber),
+			.positive("Только положительные цифры"),
 		sideC: yup
-			.string()
+			.number()
+			.typeError("Введите цифры")
 			.required("Обязательное поле")
-			.test("digints only", "Только цифры", digitsOnly)
-			.test("positive number", "Только положительные цифры", positiveNumber),
+			.positive("Только положительные цифры"),
 	})
 	.required();
 
