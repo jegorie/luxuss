@@ -3,8 +3,13 @@
 		display: flex;
 	}
 
+	&__form {
+		max-width: 220px;
+	}
+
 	&__answer {
-		margin-left: 40px;
+		margin-left: 20px;
+		max-width: 250px;
 	}
 
 	h1 {

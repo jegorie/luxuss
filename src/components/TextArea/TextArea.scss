@@ -1,4 +1,5 @@
-.textarea {	position: relative;
+.textarea {
+	position: relative;
 	display: inline-block;
 	padding-bottom: 18px;
 
@@ -42,8 +43,7 @@
 		width: 100%;
 
 		.textarea__input {
-			min-width: 220px;
-			width: auto;
+			width: calc(100% - 40px);
 		}
 	}
 
