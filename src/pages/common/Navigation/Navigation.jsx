@@ -21,7 +21,7 @@ const Navigation = () => {
 		},
 		{
 			name: "Проверка числа",
-			to: "/",
+			to: "/numbers",
 		},
 		{
 			name: "Проверка букв",
