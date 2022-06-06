@@ -1,13 +1,12 @@
 import React, { useState } from "react";import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import "./Numbers.styles.scss";
 
-import Button from "../../components/Button/Button";
+
 import TextArea from "../../components/TextArea/TextArea";
 
 
-
+import "./Letters.scss";
 
 
 
@@ -15,15 +14,18 @@ const validationSchema = yup
 	.object({
 		textAreaLetters: yup
 			.string()
-			.typeError("Введите целое число без букв")
-			.required("Обязательное поле"),
+			.typeError("Введите буквы")
+			.required("Обязательное поле")
+            .matches(/^([а-яА-ЯёЁ])+$|^[a-zA-Z]+$/, "Only alphabets are allowed for this field "),
+            
+            
 			
 	})
 	.required();
 
 const fields = [
 	{
-		label: "Поле для ввода цифр",
+		label: "Поле для ввода букв",
 		props: {
 			fluid: true,
 		},
@@ -43,22 +45,19 @@ const Letters = () => {
 		mode: "onBlur",
 		resolver: yupResolver(validationSchema),
 		defaultValues: {
-			sideA: "",
+			textAreaLetters: "",
 		},
 	});
 	const fieldValues = watch();
-	const onSubmit = ({ textArealetters }) =>
-		setAnswer(
-			getTriangleType(textArealetters)
-			
-		);
+	const onSubmit = ({ textArealetters }) => {};
+		
 	return (
 		<div className="letters">
-			<h1>Только цифры </h1>
+			<h1>Только буквы </h1>
 			<p>
             Необходимо проверить, что в текстовом поле
 				<br />
-				могут быть только цифры
+				могут быть только Русские или Латинские
 			</p>
 			<div className="letters__content">
 				<form className="letters__form" onSubmit={handleSubmit(onSubmit)}>
