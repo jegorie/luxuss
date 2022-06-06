@@ -16,7 +16,7 @@ const validationSchema = yup
 			.string()
 			.typeError("Введите буквы")
 			.required("Обязательное поле")
-            .matches(/^([а-яА-ЯёЁ])+$|^[a-zA-Z]+$/, "Only alphabets are allowed for this field "),
+            .matches(/^([а-яА-ЯёЁa-zA-Z])+$/, "Только буквы Русские или Латинские"),
             
             
 			
@@ -29,7 +29,7 @@ const fields = [
 		props: {
 			fluid: true,
 		},
-		name: "textArealetters",
+		name: "textAreaLetters",
 	}
 	
 ];
@@ -49,7 +49,7 @@ const Letters = () => {
 		},
 	});
 	const fieldValues = watch();
-	const onSubmit = ({ textArealetters }) => {};
+	const onSubmit = ({ textAreaLetters }) => {};
 		
 	return (
 		<div className="letters">
