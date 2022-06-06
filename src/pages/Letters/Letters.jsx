@@ -8,21 +8,15 @@ import TextArea from "../../components/TextArea/TextArea";
 
 
 
-function getTriangleType(TextAreaNumbers) {
-	
-}
 
 
 
 const validationSchema = yup
 	.object({
-		TextAreaNumbers: yup
-			.number()
+		textAreaLetters: yup
+			.string()
 			.typeError("Введите целое число без букв")
-			.required("Обязательное поле")
-			.integer("Введите целое число без букв")
-			.min(-5636345365 , "Слишком маленькое число")
-			.max(768574745959859 , "Слишком большое число"),
+			.required("Обязательное поле"),
 			
 	})
 	.required();
@@ -33,12 +27,12 @@ const fields = [
 		props: {
 			fluid: true,
 		},
-		name: "TextAreaNumbers",
+		name: "textArealetters",
 	}
 	
 ];
 
-const Numbers = () => {
+const Letters = () => {
 	const [answer, setAnswer] = useState(null);
 	const {
 		register,
@@ -53,22 +47,21 @@ const Numbers = () => {
 		},
 	});
 	const fieldValues = watch();
-	const onSubmit = ({ TextAreaNumbers }) =>
+	const onSubmit = ({ textArealetters }) =>
 		setAnswer(
-			getTriangleType(TextAreaNumbers)
+			getTriangleType(textArealetters)
 			
 		);
-
 	return (
-		<div className="numbers">
+		<div className="letters">
 			<h1>Только цифры </h1>
 			<p>
             Необходимо проверить, что в текстовом поле
 				<br />
 				могут быть только цифры
 			</p>
-			<div className="numbers__content">
-				<form className="numbers__form" onSubmit={handleSubmit(onSubmit)}>
+			<div className="letters__content">
+				<form className="letters__form" onSubmit={handleSubmit(onSubmit)}>
 					{fields.map((item, idx) => (
 						<TextArea
 							label={item.label}
@@ -79,16 +72,10 @@ const Numbers = () => {
 							key={idx}
 						/>
 					))}
-					<Button fluid>Проверить</Button>
 				</form>
-				<div className="numbers__answer">
-					<h2>Ответ:</h2>
-					{answer}
-
-				</div>
 			</div>
 		</div>
 	);
 };
 
-export default Numbers;
+export default Letters;

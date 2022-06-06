@@ -25,7 +25,7 @@ const Navigation = () => {
 		},
 		{
 			name: "Проверка букв",
-			to: "/",
+			to: "/letters",
 		},
 		{
 			name: 'Строка вида "N/M"',

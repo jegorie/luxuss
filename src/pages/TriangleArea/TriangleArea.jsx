@@ -85,15 +85,15 @@ const TriangleArea = () => {
 		);
 
 	return (
-		<div className="triangle">
+		<div className="triangleArea">
 			<h1>Площадь треугольника</h1>
 			<p>
 				Определение площади треугольника по трем его сторонам. Каждая из сторон
 				<br />
 				задается в отдельном текстовом поле.
 			</p>
-			<div className="triangle__content">
-				<form className="triangle__form" onSubmit={handleSubmit(onSubmit)}>
+			<div className="triangleArea__content">
+				<form className="triangleArea__form" onSubmit={handleSubmit(onSubmit)}>
 					{fields.map((item, idx) => (
 						<TextArea
 							label={item.label}
@@ -106,7 +106,7 @@ const TriangleArea = () => {
 					))}
 					<Button fluid>Проверить</Button>
 				</form>
-				<div className="triangle__answer">
+				<div className="triangleArea__answer">
 					<h2>Площадь треугольника:</h2>
 					<p>
 					{answer} 
