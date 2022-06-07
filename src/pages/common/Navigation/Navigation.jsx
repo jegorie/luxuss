@@ -13,7 +13,7 @@ const Navigation = () => {
 		},
 		{
 			name: "Пароль",
-			to: "/",
+			to: "/password",
 		},
 		{
 			name: "Числовой код",
