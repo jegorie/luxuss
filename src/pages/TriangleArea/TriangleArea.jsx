@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -23,17 +23,47 @@ const validationSchema = yup
 			.number()
 			.typeError("Введите цифры")
 			.required("Обязательное поле")
-			.positive("Только положительные цифры"),
+			.positive("Только положительные цифры")
+			.test(
+				"max sum of two fields",
+				"Одна сторона не должна быть больше суммы двух других",
+				(value, ctx) => {
+					if (value && ctx.parent.sideC && ctx.parent.sideB) {
+						return value < ctx.parent.sideC + ctx.parent.sideB;
+					}
+					return true;
+				}
+			),
 		sideB: yup
 			.number()
 			.typeError("Введите цифры")
 			.required("Обязательное поле")
-			.positive("Только положительные цифры"),
+			.positive("Только положительные цифры")
+			.test(
+				"max sum of two fields",
+				"Одна сторона не должна быть больше суммы двух других",
+				(value, ctx) => {
+					if (value && ctx.parent.sideC && ctx.parent.sideA) {
+						return value < ctx.parent.sideC + ctx.parent.sideA;
+					}
+					return true;
+				}
+			),
 		sideC: yup
 			.number()
 			.typeError("Введите цифры")
 			.required("Обязательное поле")
-			.positive("Только положительные цифры"),
+			.positive("Только положительные цифры")
+			.test(
+				"max sum of two fields",
+				"Одна сторона не должна быть больше суммы двух других",
+				(value, ctx) => {
+					if (value && ctx.parent.sideB && ctx.parent.sideA) {
+						return value < ctx.parent.sideB + ctx.parent.sideA;
+					}
+					return true;
+				}
+			),
 	})
 	.required();
 
@@ -67,7 +97,8 @@ const TriangleArea = () => {
 		register,
 		handleSubmit,
 		watch,
-		formState: { errors },
+		trigger,
+		formState: { errors,isValid },
 	} = useForm({
 		mode: "onBlur",
 		resolver: yupResolver(validationSchema),
@@ -83,6 +114,13 @@ const TriangleArea = () => {
 			getTriangleArea(sideA, sideB, sideC)
 			
 		);
+		useEffect(() => {
+			const { sideA, sideB, sideC } = fieldValues;
+			if (sideA && sideB && sideC && !isValid) {
+				trigger();
+				console.log(fieldValues);
+			}
+		}, [fieldValues.sideA, fieldValues.sideB, fieldValues.sideC]);
 
 	return (
 		<div className="triangleArea">

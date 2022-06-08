@@ -38,8 +38,8 @@ const validationSchema = yup
 				"max sum of two fields",
 				"Одна сторона не должна быть больше суммы двух других",
 				(value, ctx) => {
-					if (value && ctx.parent.sideB && ctx.parent.sideC) {
-						return value < ctx.parent.sideB + ctx.parent.sideC;
+					if (value && ctx.parent.sideC && ctx.parent.sideB) {
+						return value < ctx.parent.sideC + ctx.parent.sideB;
 					}
 					return true;
 				}

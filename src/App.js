@@ -9,6 +9,8 @@ import Numbers from "./pages/Numbers/Numbers";
 import Triangle from "./pages/Triangle/Triangle";
 import TriangleArea from "./pages/TriangleArea/TriangleArea";
 import Password from "./pages/Password/Password";
+import Stroka from "./pages/Stroka/Stroka";
+import NumbersCode from "./pages/NumbersCode/NumbersCode";
 
 export default function App() {
 	const TrigangeWithMenu = withNav(Triangle);
@@ -16,6 +18,8 @@ export default function App() {
 	const NumbersWithMenu = withNav(Numbers);
 	const LettersWithMenu = withNav(Letters);
 	const PasswordWithMenu = withNav(Password);
+	const StrokaWithMenu = withNav(Stroka);
+	const NumbersCodeWithMenu = withNav(NumbersCode);
 
 
 	return (
@@ -27,6 +31,8 @@ export default function App() {
 				<Route path="/numbers" element={<NumbersWithMenu/>} />
 				<Route path="/letters" element={<LettersWithMenu/>} />
 				<Route path="/password" element={<PasswordWithMenu/>} />
+				<Route path="/stroka" element={<StrokaWithMenu/>} />
+				<Route path="/code" element={<NumbersCodeWithMenu/>} />
 			</Routes>
 		</Router>
 	);

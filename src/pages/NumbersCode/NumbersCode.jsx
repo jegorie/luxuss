@@ -1,31 +1,37 @@
 import React, { useState } from "react";import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import "./Password.scss";
+import "./NumbersCode.scss";
 
 import Button from "../../components/Button/Button";
 import TextArea from "../../components/TextArea/TextArea";
 
 
 
-function gen_password(){
-    let len;
-    let lenMin= 8;
-    let lenMax = 15;
-    len = Math.floor(Math.random()*(lenMax-lenMin+1))+lenMin;
-    var password = "";
-    var symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!№;%:?*()_+=";
-    for (var i = 0; i < len; i++){
-        password += symbols.charAt(Math.floor(Math.random() * symbols.length));     
+function numbers_code(textAreaCode){
+    const arr = textAreaCode;
+    let array;
+    if(arr.lenght === 9){
+        array =arr.slice(0,8);
+        if(array/10){
+           return array.replaceAt(-1,0);
+           
+        }
+        else if(array/3){
+           return array.replaceAt(-1,1);
+        }
+        else
+        {
+           return array.replaceAt(-1,9);
+        }
     }
-    return password;
 }
 
 
 
 const validationSchema = yup
 	.object({
-		textAreaPassword: yup
+		textAreaCode: yup
 			.number()
             
 			.typeError("Введите целое число без букв")
@@ -37,16 +43,16 @@ const validationSchema = yup
 
 const fields = [
 	{
-		label: "Поле пароля",
+		label: "Поле для ввода кода",
 		props: {
 			fluid: true,
 		},
-		name: "textAreaPassword",
+		name: "textAreaCode",
 	}
 	
 ];
 
-const Numbers = () => {
+const NumbersCode = () => {
 	const [answer, setAnswer] = useState(null);
 	const {
 		register,
@@ -57,27 +63,27 @@ const Numbers = () => {
 		mode: "onBlur",
 		resolver: yupResolver(validationSchema),
 		defaultValues: {
-			textAreaPassword: "",
+			textAreaCode: "",
 		},
 	});
 	const fieldValues = watch();
-	const onSubmit = ({ password }) =>
+	const onSubmit = ({ textAreaCode }) =>
 		setAnswer(
-			gen_password(password)
+			numbers_code(textAreaCode)
 			
 		);
 
 	return (
-		<div className="password">
-			<h1>Пароль </h1>
+		<div className="code">
+			<h1>Числовой код </h1>
 			<p>
-            Необходимо сформировать строку, 
+            Проверка введенного числового кода.
 				<br />
-				которая будет использоваться в качестве "Пароля" 
+				
 
 			</p>
-			<div className="password__content">
-				<form className="password__form" onSubmit={handleSubmit(onSubmit)}>
+			<div className="code__content">
+				<form className="code__form" onSubmit={handleSubmit(onSubmit)}>
 					{fields.map((item, idx) => (
 						<TextArea
 							label={item.label}
@@ -90,7 +96,7 @@ const Numbers = () => {
 					))}
 					<Button fluid>Проверить</Button>
 				</form>
-				<div className="password__answer">
+				<div className="code__answer">
 					<h2>Ответ:</h2>
 					{answer}
 
@@ -100,4 +106,4 @@ const Numbers = () => {
 	);
 };
 
-export default Numbers;
+export default NumbersCode;

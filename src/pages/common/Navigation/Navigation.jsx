@@ -17,7 +17,7 @@ const Navigation = () => {
 		},
 		{
 			name: "Числовой код",
-			to: "/",
+			to: "/code",
 		},
 		{
 			name: "Проверка числа",
@@ -29,7 +29,7 @@ const Navigation = () => {
 		},
 		{
 			name: 'Строка вида "N/M"',
-			to: "/",
+			to: "/stroka",
 		},
 		{
 			name: "Площадь прямоугольника",

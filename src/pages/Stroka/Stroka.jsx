@@ -1,52 +1,50 @@
 import React, { useState } from "react";import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import "./Password.scss";
+import "./Stroka.scss";
 
 import Button from "../../components/Button/Button";
 import TextArea from "../../components/TextArea/TextArea";
 
 
 
-function gen_password(){
-    let len;
-    let lenMin= 8;
-    let lenMax = 15;
-    len = Math.floor(Math.random()*(lenMax-lenMin+1))+lenMin;
-    var password = "";
-    var symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!№;%:?*()_+=";
-    for (var i = 0; i < len; i++){
-        password += symbols.charAt(Math.floor(Math.random() * symbols.length));     
+function getNum(textAreaStroka) {
+    const arr = textAreaStroka.split('/');
+    
+    if (arr.length === 2) {
+    if (arr[0] > arr[1]) {
+    return `${arr[1]}/${arr[1]}`;
     }
-    return password;
-}
-
+    return `${arr[0]}/${arr[1]}`;
+    }
+    return 'Введите строку вида N/M';
+    }
 
 
 const validationSchema = yup
 	.object({
-		textAreaPassword: yup
-			.number()
-            
-			.typeError("Введите целое число без букв")
+		textAreaStroka: yup
+			
+            .string()
+			.typeError("Введите строку вида N/M")
 			.required("Обязательное поле")
-			,
+			.matches(/^\d+\/\d+$/,"Введите строку вида N/M"),
 			
 	})
 	.required();
 
 const fields = [
 	{
-		label: "Поле пароля",
+		label: "Поле для ввода",
 		props: {
 			fluid: true,
 		},
-		name: "textAreaPassword",
+		name: "textAreaStroka",
 	}
 	
 ];
 
-const Numbers = () => {
+const Stroka = () => {
 	const [answer, setAnswer] = useState(null);
 	const {
 		register,
@@ -57,27 +55,27 @@ const Numbers = () => {
 		mode: "onBlur",
 		resolver: yupResolver(validationSchema),
 		defaultValues: {
-			textAreaPassword: "",
+			textAreaStroka: "",
 		},
 	});
 	const fieldValues = watch();
-	const onSubmit = ({ password }) =>
+	const onSubmit = ({ textAreaStroka }) =>
 		setAnswer(
-			gen_password(password)
+			getNum(textAreaStroka)
 			
 		);
 
 	return (
-		<div className="password">
-			<h1>Пароль </h1>
+		<div className="stroka">
+			<h1>Строка N/M </h1>
 			<p>
-            Необходимо сформировать строку, 
+            Пусть имеется строка вида "N/M", 
 				<br />
-				которая будет использоваться в качестве "Пароля" 
+				где N - первое число, M - второе число.
 
 			</p>
-			<div className="password__content">
-				<form className="password__form" onSubmit={handleSubmit(onSubmit)}>
+			<div className="stroka__content">
+				<form className="stroka__form" onSubmit={handleSubmit(onSubmit)}>
 					{fields.map((item, idx) => (
 						<TextArea
 							label={item.label}
@@ -90,7 +88,7 @@ const Numbers = () => {
 					))}
 					<Button fluid>Проверить</Button>
 				</form>
-				<div className="password__answer">
+				<div className="stroka__answer">
 					<h2>Ответ:</h2>
 					{answer}
 
@@ -100,4 +98,4 @@ const Numbers = () => {
 	);
 };
 
-export default Numbers;
+export default Stroka;
