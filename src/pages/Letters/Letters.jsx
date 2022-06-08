@@ -1,14 +1,11 @@
-import React, { useState } from "react";import { useForm } from "react-hook-form";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-
 import TextArea from "../../components/TextArea/TextArea";
 
-
 import "./Letters.scss";
-
-
 
 const validationSchema = yup
 	.object({
@@ -16,10 +13,7 @@ const validationSchema = yup
 			.string()
 			.typeError("Введите буквы")
 			.required("Обязательное поле")
-            .matches(/^([а-яА-ЯёЁa-zA-Z])+$/, "Только буквы Русские или Латинские"),
-            
-            
-			
+			.matches(/^([а-яА-ЯёЁa-zA-Z])+$/, "Только буквы Русские или Латинские"),
 	})
 	.required();
 
@@ -30,8 +24,7 @@ const fields = [
 			fluid: true,
 		},
 		name: "textAreaLetters",
-	}
-	
+	},
 ];
 
 const Letters = () => {
@@ -50,12 +43,12 @@ const Letters = () => {
 	});
 	const fieldValues = watch();
 	const onSubmit = ({ textAreaLetters }) => {};
-		
+
 	return (
 		<div className="letters">
 			<h1>Только буквы </h1>
 			<p>
-            Необходимо проверить, что в текстовом поле
+				Необходимо проверить, что в текстовом поле
 				<br />
 				могут быть только Русские или Латинские
 			</p>

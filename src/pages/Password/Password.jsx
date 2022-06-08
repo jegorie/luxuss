@@ -6,22 +6,19 @@ import "./Password.scss";
 import Button from "../../components/Button/Button";
 import TextArea from "../../components/TextArea/TextArea";
 
-
-
-function gen_password(){
-    let len;
-    let lenMin= 8;
-    let lenMax = 15;
-    len = Math.floor(Math.random()*(lenMax-lenMin+1))+lenMin;
-    let password = "";
-    let symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#?!@$%^&*-";
-    for (let i = 0; i < len; i++){
-        password += symbols.charAt(Math.floor(Math.random() * symbols.length));     
-    }
-    return password;
+function gen_password() {
+	let len;
+	let lenMin = 8;
+	let lenMax = 15;
+	len = Math.floor(Math.random() * (lenMax - lenMin + 1)) + lenMin;
+	let password = "";
+	let symbols =
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#?!@$%^&*-";
+	for (let i = 0; i < len; i++) {
+		password += symbols.charAt(Math.floor(Math.random() * symbols.length));
+	}
+	return password;
 }
-
-
 
 const validationSchema = yup
 	.object({
@@ -29,8 +26,9 @@ const validationSchema = yup
 			.string()
 			.typeError("Введите целое число без букв")
 			.required("Обязательное поле")
-			.matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}+$/),
-			
+			.matches(
+				/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$/
+			),
 	})
 	.required();
 
@@ -41,8 +39,7 @@ const fields = [
 			fluid: true,
 		},
 		name: "textAreaPassword",
-	}
-	
+	},
 ];
 
 const Numbers = () => {
@@ -62,17 +59,15 @@ const Numbers = () => {
 		},
 	});
 	const fieldValues = watch();
-	const onSubmit = () =>{};
-		
+	const onSubmit = () => {};
 
 	return (
 		<div className="password">
 			<h1>Пароль </h1>
 			<p>
-            Необходимо сформировать строку, 
+				Необходимо сформировать строку,
 				<br />
-				которая будет использоваться в качестве "Пароля" 
-
+				которая будет использоваться в качестве "Пароля"
 			</p>
 			<div className="password__content">
 				<form className="password__form" onSubmit={handleSubmit(onSubmit)}>
@@ -86,15 +81,20 @@ const Numbers = () => {
 							key={idx}
 						/>
 					))}
-					<Button fluid onClick={()=>{
-						setValue("textAreaPassword",gen_password())
-						trigger()
-					}} disableForm={true}>Проверить</Button>
+					<Button
+						fluid
+						onClick={() => {
+							setValue("textAreaPassword", gen_password());
+							trigger();
+						}}
+						disableForm={true}
+					>
+						Проверить
+					</Button>
 				</form>
 				<div className="password__answer">
 					<h2>Ответ:</h2>
 					{answer}
-
 				</div>
 			</div>
 		</div>
