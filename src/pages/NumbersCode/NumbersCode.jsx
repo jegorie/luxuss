@@ -1,4 +1,5 @@
-import React, { useState } from "react";import { useForm } from "react-hook-form";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import "./NumbersCode.scss";
@@ -6,37 +7,27 @@ import "./NumbersCode.scss";
 import Button from "../../components/Button/Button";
 import TextArea from "../../components/TextArea/TextArea";
 
+function numbers_code(textAreaCode) {
+	const arr = textAreaCode.toString();
 
+	if (arr.length === 10) {
+		let array = arr.slice(0, 9);
 
-function numbers_code(textAreaCode){
-    console.log("text");
-    const arr = textAreaCode;
-    let array;
-    console.log(arr.length);
-    if(arr.length === 10){
-        array =arr.slice(0,9);
-
-        let sum = array.split("").reduce((acc,value)=>{
-            acc+=value
-        });
-        if(sum%10===0){
-         console.log(arr[9]==="0");
-          return arr[9] === "0";
-          
-        }
-        else if(sum%3===0){
-            console.log(arr[9]==="0");
-           return arr[9] === "1";
-        }
-        else
-        {
-            console.log(arr[9]==="0");
-            return arr[9] === "9";
-        }
-    }
+		let sum = array.split("").reduce((acc, value) => {
+			acc += value;
+		});
+		if (sum % 10 === 0) {
+			console.log(arr[9] === "0");
+			return arr[9] === "0";
+		} else if (sum % 3 === 0) {
+			console.log(arr[9] === "0");
+			return arr[9] === "1";
+		} else {
+			console.log(arr[9] === "0");
+			return arr[9] === "9";
+		}
+	}
 }
-
-
 
 const validationSchema = yup
 	.object({
@@ -44,8 +35,29 @@ const validationSchema = yup
 			.number()
 			.typeError("Введите 10 цифр")
 			.required("Обязательное поле")
-			,
-			
+			.test("check", "Долбаебы", value => {
+				if (!value) {
+					return true;
+				}
+
+				const string = value.toString();
+
+				if (string.length === 10) {
+					let array = string.slice(0, 9);
+
+					let sum = array.split("").reduce((acc, value) => {
+						return (acc += +value);
+					}, 0);
+					console.log(sum);
+					if (sum % 10 === 0) {
+						return string[9] === "0";
+					} else if (sum % 3 === 0) {
+						return string[9] === "1";
+					} else {
+						return string[9] === "9";
+					}
+				}
+			}),
 	})
 	.required();
 
@@ -56,8 +68,7 @@ const fields = [
 			fluid: true,
 		},
 		name: "textAreaCode",
-	}
-	
+	},
 ];
 
 const NumbersCode = () => {
@@ -66,33 +77,25 @@ const NumbersCode = () => {
 		register,
 		handleSubmit,
 		watch,
-		formState: { errors },
+		formState: { errors, isValid },
 	} = useForm({
-		mode: "onBlur",
+		mode: "onChange",
 		resolver: yupResolver(validationSchema),
 		defaultValues: {
 			textAreaCode: "",
 		},
 	});
 	const fieldValues = watch();
-	const onSubmit = ({ textAreaCode }) =>{
-        setAnswer(
-			numbers_code(textAreaCode)
-			
-		);
-        
-    }
-		
-        
+	const onSubmit = ({ textAreaCode }) => {
+		setAnswer(numbers_code(textAreaCode));
+	};
 
 	return (
 		<div className="code">
 			<h1>Числовой код </h1>
 			<p>
-            Проверка введенного числового кода.
+				Проверка введенного числового кода.
 				<br />
-				
-
 			</p>
 			<div className="code__content">
 				<form className="code__form" onSubmit={handleSubmit(onSubmit)}>
@@ -110,8 +113,7 @@ const NumbersCode = () => {
 				</form>
 				<div className="code__answer">
 					<h2>Ответ:</h2>
-					{answer}
-
+					{isValid && "Все отлично"}
 				</div>
 			</div>
 		</div>
