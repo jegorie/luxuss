@@ -9,20 +9,29 @@ import TextArea from "../../components/TextArea/TextArea";
 
 
 function numbers_code(textAreaCode){
+    console.log("text");
     const arr = textAreaCode;
     let array;
-    if(arr.lenght === 9){
-        array =arr.slice(0,8);
-        if(array/10){
-           return array.replaceAt(-1,0);
-           
+    console.log(arr.length);
+    if(arr.length === 10){
+        array =arr.slice(0,9);
+
+        let sum = array.split("").reduce((acc,value)=>{
+            acc+=value
+        });
+        if(sum%10===0){
+         console.log(arr[9]==="0");
+          return arr[9] === "0";
+          
         }
-        else if(array/3){
-           return array.replaceAt(-1,1);
+        else if(sum%3===0){
+            console.log(arr[9]==="0");
+           return arr[9] === "1";
         }
         else
         {
-           return array.replaceAt(-1,9);
+            console.log(arr[9]==="0");
+            return arr[9] === "9";
         }
     }
 }
@@ -33,8 +42,7 @@ const validationSchema = yup
 	.object({
 		textAreaCode: yup
 			.number()
-            
-			.typeError("Введите целое число без букв")
+			.typeError("Введите 10 цифр")
 			.required("Обязательное поле")
 			,
 			
@@ -67,11 +75,15 @@ const NumbersCode = () => {
 		},
 	});
 	const fieldValues = watch();
-	const onSubmit = ({ textAreaCode }) =>
-		setAnswer(
+	const onSubmit = ({ textAreaCode }) =>{
+        setAnswer(
 			numbers_code(textAreaCode)
 			
 		);
+        
+    }
+		
+        
 
 	return (
 		<div className="code">

@@ -24,10 +24,10 @@ const validationSchema = yup
 	.object({
 		textAreaPassword: yup
 			.string()
-			.typeError("Введите целое число без букв")
+			.typeError("Введите пароль ")
 			.required("Обязательное поле")
 			.matches(
-				/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$/
+				/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$/, "Пароль не падходит"
 			),
 	})
 	.required();
@@ -89,13 +89,10 @@ const Numbers = () => {
 						}}
 						disableForm={true}
 					>
-						Проверить
+						Сгенерировать пароль 
 					</Button>
 				</form>
-				<div className="password__answer">
-					<h2>Ответ:</h2>
-					{answer}
-				</div>
+						
 			</div>
 		</div>
 	);
