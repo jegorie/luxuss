@@ -13,9 +13,9 @@ function gen_password(){
     let lenMin= 8;
     let lenMax = 15;
     len = Math.floor(Math.random()*(lenMax-lenMin+1))+lenMin;
-    var password = "";
-    var symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!№;%:?*()_+=";
-    for (var i = 0; i < len; i++){
+    let password = "";
+    let symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#?!@$%^&*-";
+    for (let i = 0; i < len; i++){
         password += symbols.charAt(Math.floor(Math.random() * symbols.length));     
     }
     return password;
@@ -26,11 +26,10 @@ function gen_password(){
 const validationSchema = yup
 	.object({
 		textAreaPassword: yup
-			.number()
-            
+			.string()
 			.typeError("Введите целое число без букв")
 			.required("Обязательное поле")
-			,
+			.matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}+$/),
 			
 	})
 	.required();
@@ -52,6 +51,8 @@ const Numbers = () => {
 		register,
 		handleSubmit,
 		watch,
+		setValue,
+		trigger,
 		formState: { errors },
 	} = useForm({
 		mode: "onBlur",
@@ -61,11 +62,8 @@ const Numbers = () => {
 		},
 	});
 	const fieldValues = watch();
-	const onSubmit = ({ password }) =>
-		setAnswer(
-			gen_password(password)
-			
-		);
+	const onSubmit = () =>{};
+		
 
 	return (
 		<div className="password">
@@ -88,7 +86,10 @@ const Numbers = () => {
 							key={idx}
 						/>
 					))}
-					<Button fluid>Проверить</Button>
+					<Button fluid onClick={()=>{
+						setValue("textAreaPassword",gen_password())
+						trigger()
+					}} disableForm={true}>Проверить</Button>
 				</form>
 				<div className="password__answer">
 					<h2>Ответ:</h2>
