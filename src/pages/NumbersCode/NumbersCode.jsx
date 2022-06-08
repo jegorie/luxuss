@@ -9,8 +9,7 @@ import TextArea from "../../components/TextArea/TextArea";
 
 
 function numbers_code(textAreaCode){
-    console.log("text");
-    const arr = textAreaCode;
+    const arr = textAreaCode.toString();
     let array;
     console.log(arr.length);
     if(arr.length === 10){
@@ -25,12 +24,12 @@ function numbers_code(textAreaCode){
           
         }
         else if(sum%3===0){
-            console.log(arr[9]==="0");
+            console.log(arr[9]==="1");
            return arr[9] === "1";
         }
         else
         {
-            console.log(arr[9]==="0");
+            console.log(arr[9]==="9");
             return arr[9] === "9";
         }
     }
@@ -91,7 +90,16 @@ const NumbersCode = () => {
 			<p>
             Проверка введенного числового кода.
 				<br />
-				
+				Последняя цифра кода – контрольное (проверочное число)
+                <br />
+                Eсли сумма первых 9 цифр делится на 10, то в конце (на месте
+                    проверочного числа )должен стоять 0
+                    <br />
+                    Если сумма первых 9 цифр делится на 3, то в конце (на месте
+                        проверочного числа ) должна стоять единица 1;
+                        <br />
+                        Во всех остальных случаях в конце кода (на месте проверочного числа)
+                        стоит цифра 9.
 
 			</p>
 			<div className="code__content">

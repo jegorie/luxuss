@@ -11,6 +11,7 @@ import TriangleArea from "./pages/TriangleArea/TriangleArea";
 import Password from "./pages/Password/Password";
 import Stroka from "./pages/Stroka/Stroka";
 import NumbersCode from "./pages/NumbersCode/NumbersCode";
+import RegZnak from "./pages/RegZnak/RegZnak";
 
 export default function App() {
 	const TrigangeWithMenu = withNav(Triangle);
@@ -20,6 +21,8 @@ export default function App() {
 	const PasswordWithMenu = withNav(Password);
 	const StrokaWithMenu = withNav(Stroka);
 	const NumbersCodeWithMenu = withNav(NumbersCode);
+	const RegZnakCodeWithMenu = withNav(RegZnak);
+
 
 
 	return (
@@ -33,6 +36,7 @@ export default function App() {
 				<Route path="/password" element={<PasswordWithMenu/>} />
 				<Route path="/stroka" element={<StrokaWithMenu/>} />
 				<Route path="/code" element={<NumbersCodeWithMenu/>} />
+				<Route path="/regznak" element={<RegZnakCodeWithMenu/>} />
 			</Routes>
 		</Router>
 	);

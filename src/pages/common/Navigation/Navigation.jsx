@@ -37,7 +37,7 @@ const Navigation = () => {
 		},
 		{
 			name: "Регистрационный знак",
-			to: "/",
+			to: "/regznak",
 		},
 	];
 
