@@ -4,29 +4,11 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import "./NumbersCode.scss";
 
-import Button from "../../components/Button/Button";
+
 import TextArea from "../../components/TextArea/TextArea";
 
 function numbers_code(textAreaCode) {
-	const arr = textAreaCode.toString();
 
-	if (arr.length === 10) {
-		let array = arr.slice(0, 9);
-
-		let sum = array.split("").reduce((acc, value) => {
-			acc += value;
-		});
-		if (sum % 10 === 0) {
-			console.log(arr[9] === "0");
-			return arr[9] === "0";
-		} else if (sum % 3 === 0) {
-			console.log(arr[9] === "0");
-			return arr[9] === "1";
-		} else {
-			console.log(arr[9] === "0");
-			return arr[9] === "9";
-		}
-	}
 }
 
 const validationSchema = yup
@@ -48,7 +30,7 @@ const validationSchema = yup
 					let sum = array.split("").reduce((acc, value) => {
 						return (acc += +value);
 					}, 0);
-					console.log(sum);
+					
 					if (sum % 10 === 0) {
 						return string[9] === "0";
 					} else if (sum % 3 === 0) {
@@ -57,6 +39,7 @@ const validationSchema = yup
 						return string[9] === "9";
 					}
 				}
+				
 			}),
 	})
 	.required();

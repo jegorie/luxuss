@@ -53,11 +53,15 @@ const RegZnak = () => {
 
 	return (
 		<div className="znak">
-			<h1>Пароль </h1>
+			<h1>Номерной знак
+			автомобиля РФ </h1>
 			<p>
-				Необходимо сформировать строку,
+			Проверка правильности ввода регистрационного номерного знака
+			<br />
+				автомобиля Российской Федерации.
+
 				<br />
-				которая будет использоваться в качестве "Пароля"
+				
 			</p>
 			<div className="znak__content">
 				<form className="znak__form" onSubmit={handleSubmit(onSubmit)}>
