@@ -1,10 +1,18 @@
 .withNav {
-	display: flex;
+  display: flex;
 
-	&__component {
-		display: flex;
-		justify-content: center;
-		flex: 1;
-		margin-top: 80px;
-	}
+  &__component {
+    display: flex;
+    flex: 1;
+    margin-top: 80px;
+    margin-left: 100px;
+  }
+
+  @media screen and (max-width: 1023px) {
+    display: block;
+
+    &__component {
+      margin: 20px 20px 0 20px;
+    }
+  }
 }

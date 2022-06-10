@@ -23,20 +23,18 @@ export default function App() {
 	const NumbersCodeWithMenu = withNav(NumbersCode);
 	const RegZnakCodeWithMenu = withNav(RegZnak);
 
-
-
 	return (
 		<Router>
 			<Routes>
 				<Route path="/" element={<Main />} />
 				<Route path="/triangle" element={<TrigangeWithMenu />} />
 				<Route path="/trianglearea" element={<TriangleAreaWithMenu />} />
-				<Route path="/numbers" element={<NumbersWithMenu/>} />
-				<Route path="/letters" element={<LettersWithMenu/>} />
-				<Route path="/password" element={<PasswordWithMenu/>} />
-				<Route path="/stroka" element={<StrokaWithMenu/>} />
-				<Route path="/code" element={<NumbersCodeWithMenu/>} />
-				<Route path="/regznak" element={<RegZnakCodeWithMenu/>} />
+				<Route path="/numbers" element={<NumbersWithMenu />} />
+				<Route path="/letters" element={<LettersWithMenu />} />
+				<Route path="/password" element={<PasswordWithMenu />} />
+				<Route path="/stroka" element={<StrokaWithMenu />} />
+				<Route path="/code" element={<NumbersCodeWithMenu />} />
+				<Route path="/regznak" element={<RegZnakCodeWithMenu />} />
 			</Routes>
 		</Router>
 	);

@@ -1,21 +1,32 @@
 .triangleArea {
-	&__content {
-		display: flex;
-	}
+  &__content {
+    display: flex;
+  }
 
-	&__answer {
-		margin-left: 40px;
-	}
-	&__form {
-		max-width: 220px;
-	}
+  &__answer {
+    margin-left: 40px;
+  }
+  &__form {
+    max-width: 220px;
+  }
 
-	h1 {
-		position: relative;
-		padding-bottom: 16px;
-	}
+  h1 {
+    position: relative;
+    padding-bottom: 16px;
+  }
 
-	p {
-		padding-bottom: 40px;
-	}
+  p {
+    padding-bottom: 40px;
+  }
+
+  @media screen and (max-width: 1023px) {
+    &__content {
+      display: block;
+    }
+
+    &__answer {
+      margin-left: 0;
+      margin-top: 20px;
+    }
+  }
 }

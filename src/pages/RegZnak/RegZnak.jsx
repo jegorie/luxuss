@@ -1,95 +1,76 @@
-import React, { useState } from "react";import { useForm } from "react-hook-form";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import TextArea from "../../components/TextArea/TextArea";
 import "./RegZnak.scss";
 
-import Button from "../../components/Button/Button";
-import TextArea from "../../components/TextArea/TextArea";
-
-function gen_password() {
-	
-}
-
 const validationSchema = yup
-	.object({
-		textAreaRegZnak: yup
-			.string()
-			.typeError("Введите пароль ")
-			.required("Обязательное поле")
-			.matches(
-				/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$/, "Пароль не падходит"
-			),
-	})
-	.required();
+  .object({
+    textAreaRegZnak: yup
+      .string()
+      .typeError("Введите пароль ")
+      .required("Обязательное поле")
+      .matches(
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$/,
+        "Пароль не падходит"
+      ),
+  })
+  .required();
 
 const fields = [
-	{
-		label: "Поле пароля",
-		props: {
-			fluid: true,
-		},
-		name: "textAreaRegZnak",
-	},
+  {
+    label: "Поле пароля",
+    props: {
+      fluid: true,
+    },
+    name: "textAreaRegZnak",
+  },
 ];
 
 const RegZnak = () => {
-	const [answer, setAnswer] = useState(null);
-	const {
-		register,
-		handleSubmit,
-		watch,
-		setValue,
-		trigger,
-		formState: { errors },
-	} = useForm({
-		mode: "onBlur",
-		resolver: yupResolver(validationSchema),
-		defaultValues: {
-			textAreaRegZnak: "",
-		},
-	});
-	const fieldValues = watch();
-	const onSubmit = () => {};
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    trigger,
+    formState: { errors },
+  } = useForm({
+    mode: "onBlur",
+    resolver: yupResolver(validationSchema),
+    defaultValues: {
+      textAreaRegZnak: "",
+    },
+  });
+  const fieldValues = watch();
+  const onSubmit = () => {};
 
-	return (
-		<div className="znak">
-			<h1>Номерной знак
-			автомобиля РФ </h1>
-			<p>
-			Проверка правильности ввода регистрационного номерного знака
-			<br />
-				автомобиля Российской Федерации.
-
-				<br />
-				
-			</p>
-			<div className="znak__content">
-				<form className="znak__form" onSubmit={handleSubmit(onSubmit)}>
-					{fields.map((item, idx) => (
-						<TextArea
-							label={item.label}
-							{...item.props}
-							{...register(item.name)}
-							value={fieldValues[item.name]}
-							error={errors[item.name]?.message}
-							key={idx}
-						/>
-					))}
-					<Button
-						fluid
-						onClick={() => {
-							setValue("textAreaRegZnak", gen_password());
-							trigger();
-						}}
-						disableForm={true}
-					>
-						Проверить
-					</Button>
-				</form>
-						
-			</div>
-		</div>
-	);
+  return (
+    <div className="znak">
+      <h1>Номерной знак автомобиля РФ </h1>
+      <p>
+        Проверка правильности ввода регистрационного номерного знака
+        <br />
+        автомобиля Российской Федерации.
+        <br />
+      </p>
+      <div className="znak__content">
+        <form className="znak__form" onSubmit={handleSubmit(onSubmit)}>
+          {fields.map((item, idx) => (
+            <TextArea
+              label={item.label}
+              {...item.props}
+              {...register(item.name)}
+              value={fieldValues[item.name]}
+              error={errors[item.name]?.message}
+              key={idx}
+            />
+          ))}
+        </form>
+      </div>
+    </div>
+  );
 };
 
 export default RegZnak;
