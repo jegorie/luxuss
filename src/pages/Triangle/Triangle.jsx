@@ -5,6 +5,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Button from "../../components/Button/Button";
 import TextArea from "../../components/TextArea/TextArea";
 import "./Triangle.scss";
+import Answers from "../../components/Answers/Answers";
+import getErrorKeysFromObjectYup from "../../utils/getErrorsKeysFromObjectYup";
 
 function getTriangleType(sideA, sideB, sideC) {
   return sideC ** 2 == sideA ** 2 + sideB ** 2 ||
@@ -29,10 +31,22 @@ function getTriangleView(sideA, sideB, sideC) {
 const validationSchema = yup
   .object({
     sideA: yup
-      .number()
-      .typeError("Введите цифры")
+      .string()
       .required("Обязательное поле")
-      .positive("Только положительные цифры")
+      // .matches(/^-?[0-9]+$/, "Введите цифры")
+      .test("onlynum", "Введите цифры", (value) => {
+        return /^-?[0-9]+$/.test(value);
+      })
+      // .matches(/^(?!-)[0-9]+$/, "Только положительные")
+      .test("positive", "Только положительные", (value) => {
+        return /^(?!-)[0-9]+$/.test(value);
+      })
+      // .matches(/^[1-9]+$/, "Больше нуля")
+      .test("zero", "Больше нуля", (value) => {
+        return /^[1-9]+$/.test(value);
+      })
+      .typeError("Введите цифры")
+      // .positive("Только положительные цифры")
       .test(
         "max sum of two fields",
         "Одна сторона не должна быть больше суммы двух других",
@@ -44,31 +58,55 @@ const validationSchema = yup
         }
       ),
     sideB: yup
-      .number()
-      .typeError("Введите цифры")
+      .string()
       .required("Обязательное поле")
-      .positive("Только положительные цифры")
+      // .matches(/^-?[0-9]+$/, "Введите цифры")
+      .test("onlynum", "Введите цифры", (value) => {
+        return /^-?[0-9]+$/.test(value);
+      })
+      // .matches(/^(?!-)[0-9]+$/, "Только положительные")
+      .test("positive", "Только положительные", (value) => {
+        return /^(?!-)[0-9]+$/.test(value);
+      })
+      // .matches(/^[1-9]+$/, "Больше нуля")
+      .test("zero", "Больше нуля", (value) => {
+        return /^[1-9]+$/.test(value);
+      })
+      .typeError("Введите цифры")
+      // .positive("Только положительные цифры")
       .test(
         "max sum of two fields",
         "Одна сторона не должна быть больше суммы двух других",
         (value, ctx) => {
-          if (value && ctx.parent.sideC && ctx.parent.sideA) {
-            return value < ctx.parent.sideC + ctx.parent.sideA;
+          if (value && ctx.parent.sideC && ctx.parent.sideB) {
+            return value < ctx.parent.sideC + ctx.parent.sideB;
           }
           return true;
         }
       ),
     sideC: yup
-      .number()
-      .typeError("Введите цифры")
+      .string()
       .required("Обязательное поле")
-      .positive("Только положительные цифры")
+      // .matches(/^-?[0-9]+$/, "Введите цифры")
+      .test("onlynum", "Введите цифры", (value) => {
+        return /^-?[0-9]+$/.test(value);
+      })
+      // .matches(/^(?!-)[0-9]+$/, "Только положительные")
+      .test("positive", "Только положительные", (value) => {
+        return /^(?!-)[0-9]+$/.test(value);
+      })
+      // .matches(/^[1-9]+$/, "Больше нуля")
+      .test("zero", "Больше нуля", (value) => {
+        return /^[1-9]+$/.test(value);
+      })
+      .typeError("Введите цифры")
+      // .positive("Только положительные цифры")
       .test(
         "max sum of two fields",
         "Одна сторона не должна быть больше суммы двух других",
         (value, ctx) => {
-          if (value && ctx.parent.sideB && ctx.parent.sideA) {
-            return value < ctx.parent.sideB + ctx.parent.sideA;
+          if (value && ctx.parent.sideC && ctx.parent.sideB) {
+            return value < ctx.parent.sideC + ctx.parent.sideB;
           }
           return true;
         }
@@ -120,11 +158,10 @@ const Triangle = () => {
   });
 
   const fieldValues = watch();
-  const onSubmit = ({ sideA, sideB, sideC }) =>
-    setAnswer(
-      getTriangleType(sideA, sideB, sideC),
-      setQuest(getTriangleView(sideA, sideB, sideC))
-    );
+  const onSubmit = ({ sideA, sideB, sideC }) => {
+    setAnswer(getTriangleType(sideA, sideB, sideC));
+    setQuest(getTriangleView(sideA, sideB, sideC));
+  };
 
   useEffect(() => {
     const { sideA, sideB, sideC } = fieldValues;
@@ -163,6 +200,47 @@ const Triangle = () => {
           {quest}
         </div>
       </div>
+      <Answers
+        casesList={[
+          {
+            text: "Обязательное поле A",
+            trigger: "required-sideA",
+          },
+          {
+            text: "Обязательное поле B",
+            trigger: "required-sideB",
+          },
+          {
+            text: "Обязательное поле C",
+            trigger: "required-sideC",
+          },
+          {
+            text: "Прямоугольный треугольник",
+            trigger: "Прямоугольный треугольник",
+          },
+          {
+            text: "Тупоугольный треугольник",
+            trigger: "Тупоугольный треугольник",
+          },
+          {
+            text: "Остроугольный треугольник",
+            trigger: "Остроугольный треугольник",
+          },
+          {
+            text: "Равносторонний треугольник",
+            trigger: " (Равносторонний треугольник)",
+          },
+          {
+            text: "Равнобедренный треугольник",
+            trigger: " (Равнобедренный треугольник)",
+          },
+          {
+            text: "Равнобедренный треугольник",
+            trigger: " (Разносторонний треугольник)",
+          },
+        ]}
+        triggersList={[...getErrorKeysFromObjectYup(errors), answer, quest]}
+      />
     </div>
   );
 };
