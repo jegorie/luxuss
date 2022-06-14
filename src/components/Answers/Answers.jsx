@@ -11,10 +11,19 @@ const Answers = ({ casesList, triggersList }) => {
     ]);
   }, [triggersList]);
 
+  console.log(casesList);
+
+  const foundedItemsCount = casesList.reduce((acc, item) => {
+    if (triggersListState.includes(item.trigger)) {
+      acc.push(item.trigger);
+    }
+    return acc;
+  }, []).length;
+
   return (
     <div className="answers">
       <h2>
-        Вы нашли {triggersListState.length} / {casesList.length} кейсов
+        Вы нашли {foundedItemsCount} / {casesList.length} кейсов
       </h2>
       {casesList.map((item, idx) => {
         return (
