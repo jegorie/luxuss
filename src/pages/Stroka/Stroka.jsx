@@ -2,10 +2,15 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import "./Stroka.scss";
+
 
 import Button from "../../components/Button/Button";
 import TextArea from "../../components/TextArea/TextArea";
+
+import "./Stroka.scss";
+import Answers from "../../components/Answers/Answers";
+import getErrorKeysFromObjectYup from "../../utils/getErrorsKeysFromObjectYup";
+
 
 function getNum(textAreaStroka) {
   const arr = textAreaStroka.split("/");
@@ -26,7 +31,10 @@ const validationSchema = yup
       .string()
       .typeError("Введите строку вида N/M")
       .required("Обязательное поле")
-      .matches(/^\d+\/\d+$/, "Введите строку вида N/M"),
+      .test("zero", "Больше нуля", (value) => {
+        return /^\d+\/\d+$/.test(value);
+      }),
+      // .matches(/^\d+\/\d+$/, "Введите строку вида N/M"),
   })
   .required();
 
@@ -84,6 +92,35 @@ const Stroka = () => {
           {answer}
         </div>
       </div>
+      <Answers
+        casesList={[
+          {
+            text: "Обязательное поле A",
+            trigger: "required-sideA",
+          },
+          {
+            text: "Обязательное поле B",
+            trigger: "required-sideB",
+          },
+          {
+            text: "Одна сторона не должна быть больше суммы двух других",
+            trigger: "max sum of two fields-sideC",
+          },
+          {
+            text: "Введён 0 ",
+            trigger: "zero-sideB",
+          },
+          {
+            text: "Отрицательное число ",
+            trigger: "positive-sideA",
+          },
+          {
+            text: "Буквы",
+            trigger: "onlynum-sideC",
+          },
+        ]}
+        triggersList={[...getErrorKeysFromObjectYup(errors), answer]}
+      />
     </div>
   );
 };

@@ -43,7 +43,7 @@ const validationSchema = yup
       })
       // .matches(/^[1-9]+$/, "Больше нуля")
       .test("zero", "Больше нуля", (value) => {
-        return /^[1-9]+$/.test(value);
+        return /^[1-9]\d*$/.test(value);
       })
       .typeError("Введите цифры")
       // .positive("Только положительные цифры")
@@ -70,7 +70,7 @@ const validationSchema = yup
       })
       // .matches(/^[1-9]+$/, "Больше нуля")
       .test("zero", "Больше нуля", (value) => {
-        return /^[1-9]+$/.test(value);
+        return /^[1-9]\d*$/.test(value);
       })
       .typeError("Введите цифры")
       // .positive("Только положительные цифры")
@@ -78,8 +78,8 @@ const validationSchema = yup
         "max sum of two fields",
         "Одна сторона не должна быть больше суммы двух других",
         (value, ctx) => {
-          if (value && ctx.parent.sideC && ctx.parent.sideB) {
-            return +value < +ctx.parent.sideC + +ctx.parent.sideB;
+          if (value && ctx.parent.sideC && ctx.parent.sideA) {
+            return +value < +ctx.parent.sideC + +ctx.parent.sideA;
           }
           return true;
         }
@@ -97,7 +97,7 @@ const validationSchema = yup
       })
       // .matches(/^[1-9]+$/, "Больше нуля")
       .test("zero", "Больше нуля", (value) => {
-        return /^[1-9]+$/.test(value);
+        return /^[1-9]\d*$/.test(value);
       })
       .typeError("Введите цифры")
       // .positive("Только положительные цифры")
@@ -105,8 +105,8 @@ const validationSchema = yup
         "max sum of two fields",
         "Одна сторона не должна быть больше суммы двух других",
         (value, ctx) => {
-          if (value && ctx.parent.sideC && ctx.parent.sideB) {
-            return +value < +ctx.parent.sideC + +ctx.parent.sideB;
+          if (value && ctx.parent.sideA && ctx.parent.sideB) {
+            return +value < +ctx.parent.sideA + +ctx.parent.sideB;
           }
           return true;
         }
@@ -237,6 +237,22 @@ const Triangle = () => {
           {
             text: "Равнобедренный треугольник",
             trigger: " (Разносторонний треугольник)",
+          },
+          {
+            text: "Одна сторона не должна быть больше суммы двух других",
+            trigger: "max sum of two fields-sideC",
+          },
+          {
+            text: "Введён 0 ",
+            trigger: "zero-sideB",
+          },
+          {
+            text: "Отрицательное число ",
+            trigger: "positive-sideA",
+          },
+          {
+            text: "Буквы",
+            trigger: "onlynum-sideC",
           },
         ]}
         triggersList={[...getErrorKeysFromObjectYup(errors), answer, quest]}
