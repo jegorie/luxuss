@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import "./Numbers.styles.scss";
+
 
 import Button from "../../components/Button/Button";
 import TextArea from "../../components/TextArea/TextArea";
+
+import "./Numbers.styles.scss";
+import Answers from "../../components/Answers/Answers";
+import getErrorKeysFromObjectYup from "../../utils/getErrorsKeysFromObjectYup";
 
 function getTriangleType(TextAreaNumbers) {}
 
@@ -13,9 +17,10 @@ const validationSchema = yup
   .object({
     TextAreaNumbers: yup
       .number()
-      .typeError("Введите целое число без букв")
       .required("Обязательное поле")
-      .integer("Введите целое число без букв")
+      .typeError("Введите число без букв")
+      
+      .integer("Введите целое число")
       .min(-5636345365, "Слишком маленькое число")
       .max(768574745959859, "Слишком большое число"),
   })
@@ -71,11 +76,32 @@ const Numbers = () => {
           ))}
           <Button fluid>Проверить</Button>
         </form>
-        <div className="numbers__answer">
-          <h2>Ответ:</h2>
-          {answer}
-        </div>
+        
       </div>
+      <Answers
+        casesList={[  
+          {
+            text: "Не цифры",
+            trigger: "typeError-TextAreaNumbers",
+          },
+          {
+            text: "Не целое",
+            trigger: "integer-TextAreaNumbers",
+          },
+          {
+            text: "Слишком большое",
+            trigger: "max-TextAreaNumbers",
+          },
+          {
+            text: "Слишком маленькое",
+            trigger: "min-TextAreaNumbers",
+          },
+          
+          
+          
+        ]}
+        triggersList={[...getErrorKeysFromObjectYup(errors), ]}
+      />
     </div>
   );
 };

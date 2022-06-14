@@ -5,16 +5,20 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import TextArea from "../../components/TextArea/TextArea";
 import "./RegZnak.scss";
 
+
+import Answers from "../../components/Answers/Answers";
+import getErrorKeysFromObjectYup from "../../utils/getErrorsKeysFromObjectYup";
+
 const validationSchema = yup
   .object({
     textAreaRegZnak: yup
       .string()
       .typeError("Введите пароль ")
       .required("Обязательное поле")
-      .matches(
-        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$/,
-        "Пароль не падходит"
-      ),
+      
+      .test("stroka", "Не верный формат", (value) => {
+        return /^[АВЕКМНОРСТУХ]\d{3}(?<!000)[АВЕКМНОРСТУХ]{2}\d{2,3}$/.test(value);
+      }),
   })
   .required();
 
@@ -33,8 +37,6 @@ const RegZnak = () => {
     register,
     handleSubmit,
     watch,
-    setValue,
-    trigger,
     formState: { errors },
   } = useForm({
     mode: "onBlur",
@@ -69,6 +71,19 @@ const RegZnak = () => {
           ))}
         </form>
       </div>
+      <Answers
+        casesList={[
+          {
+            text: "Обязательное поле ",
+            trigger: "required-textAreaRegZnak",
+          },
+          {
+            text: "Строка не той формы(Обрабатывает ошибки на цифры и другие символы)",
+            trigger: "stroka-textAreaRegZnak",
+          },
+        ]}
+        triggersList={[...getErrorKeysFromObjectYup(errors), ]}
+      />
     </div>
   );
 };
