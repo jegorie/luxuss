@@ -52,7 +52,7 @@ const validationSchema = yup
         "Одна сторона не должна быть больше суммы двух других",
         (value, ctx) => {
           if (value && ctx.parent.sideC && ctx.parent.sideB) {
-            return value < ctx.parent.sideC + ctx.parent.sideB;
+            return +value < +ctx.parent.sideC + +ctx.parent.sideB;
           }
           return true;
         }
@@ -79,7 +79,7 @@ const validationSchema = yup
         "Одна сторона не должна быть больше суммы двух других",
         (value, ctx) => {
           if (value && ctx.parent.sideC && ctx.parent.sideB) {
-            return value < ctx.parent.sideC + ctx.parent.sideB;
+            return +value < +ctx.parent.sideC + +ctx.parent.sideB;
           }
           return true;
         }
@@ -106,7 +106,7 @@ const validationSchema = yup
         "Одна сторона не должна быть больше суммы двух других",
         (value, ctx) => {
           if (value && ctx.parent.sideC && ctx.parent.sideB) {
-            return value < ctx.parent.sideC + ctx.parent.sideB;
+            return +value < +ctx.parent.sideC + +ctx.parent.sideB;
           }
           return true;
         }
