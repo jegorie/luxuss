@@ -6,6 +6,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import TextArea from "../../components/TextArea/TextArea";
 
 import "./Letters.scss";
+import Answers from "../../components/Answers/Answers";
+import getErrorKeysFromObjectYup from "../../utils/getErrorsKeysFromObjectYup";
+
 
 const validationSchema = yup
   .object({
@@ -13,7 +16,11 @@ const validationSchema = yup
       .string()
       .typeError("Введите буквы")
       .required("Обязательное поле")
-      .matches(/^([а-яА-ЯёЁa-zA-Z])+$/, "Только буквы Русские или Латинские"),
+     // .matches(/^([а-яА-ЯёЁa-zA-Z])+$/, "Только буквы Русские или Латинские"),
+     
+     .test("stroka", "Только буквы Русские или Латинские", (value) => {
+        return /^([а-яА-ЯёЁa-zA-Z])+$/.test(value);
+      }),
   })
   .required();
 
@@ -65,6 +72,19 @@ const Letters = () => {
           ))}
         </form>
       </div>
+      <Answers
+        casesList={[
+          {
+            text: "Обязательное поле ",
+            trigger: "required-textAreaLetters",
+          },
+          {
+            text: "Строка не той формы(Обрабатывает ошибки на цифры и другие символы)",
+            trigger: "stroka-textAreaLetters",
+          },
+        ]}
+        triggersList={[...getErrorKeysFromObjectYup(errors), ]}
+      />
     </div>
   );
 };

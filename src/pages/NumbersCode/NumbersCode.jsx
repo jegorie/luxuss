@@ -2,24 +2,30 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import "./NumbersCode.scss";
+
 
 import TextArea from "../../components/TextArea/TextArea";
+
+import "./NumbersCode.scss";
+import Answers from "../../components/Answers/Answers";
+import getErrorKeysFromObjectYup from "../../utils/getErrorsKeysFromObjectYup";
 
 const validationSchema = yup
   .object({
     textAreaCode: yup
       .number()
-      .typeError("Введите 10 цифр")
       .required("Обязательное поле")
+      .typeError("Введите 10 цифр")
+     
       .test("check", "Контрольное число не верное", (value) => {
         if (!value) {
           return true;
         }
 
         const string = value.toString();
-
+        
         if (string.length === 10) {
+         
           let array = string.slice(0, 9);
 
           let sum = array.split("").reduce((acc, value) => {
@@ -98,6 +104,22 @@ const NumbersCode = () => {
           {isValid && "Все отлично"}
         </div>
       </div>
+      <Answers
+        casesList={[
+          {
+            text: "Обязательное поле ",
+            trigger: "required-textAreaCode",
+          },
+          {
+            text: "Не цифры",
+            trigger: "typeError-textAreaCode",
+          },
+          
+          
+          
+        ]}
+        triggersList={[...getErrorKeysFromObjectYup(errors), ]}
+      />
     </div>
   );
 };

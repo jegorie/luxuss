@@ -31,9 +31,10 @@ const validationSchema = yup
       .string()
       .typeError("Введите строку вида N/M")
       .required("Обязательное поле")
-      .test("zero", "Больше нуля", (value) => {
-        return /^\d+\/\d+$/.test(value);
+      .test("stroka", "Строка N/M", (value) => {
+        return /^([1-9]\d)+\/([1-9]\d)+$/.test(value);
       }),
+      
       // .matches(/^\d+\/\d+$/, "Введите строку вида N/M"),
   })
   .required();
@@ -95,28 +96,12 @@ const Stroka = () => {
       <Answers
         casesList={[
           {
-            text: "Обязательное поле A",
-            trigger: "required-sideA",
+            text: "Обязательное поле ",
+            trigger: "required-textAreaStroka",
           },
           {
-            text: "Обязательное поле B",
-            trigger: "required-sideB",
-          },
-          {
-            text: "Одна сторона не должна быть больше суммы двух других",
-            trigger: "max sum of two fields-sideC",
-          },
-          {
-            text: "Введён 0 ",
-            trigger: "zero-sideB",
-          },
-          {
-            text: "Отрицательное число ",
-            trigger: "positive-sideA",
-          },
-          {
-            text: "Буквы",
-            trigger: "onlynum-sideC",
+            text: "Строка не той формы(Обрабатывает ошибки на 0,буквы,больше 1 /)",
+            trigger: "stroka-textAreaStroka",
           },
         ]}
         triggersList={[...getErrorKeysFromObjectYup(errors), answer]}
