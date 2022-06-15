@@ -61,13 +61,14 @@ const NumbersCode = () => {
     watch,
     formState: { errors, isValid },
   } = useForm({
-    mode: "onChange",
+    mode: "onSubmit",
     resolver: yupResolver(validationSchema),
     defaultValues: {
       textAreaCode: "",
     },
   });
   const fieldValues = watch();
+  const onSubmit = ({ textAreaCode }) => {};
 
   return (
     <div className="code">
@@ -87,7 +88,7 @@ const NumbersCode = () => {
         стоит цифра 9.
       </p>
       <div className="code__content">
-        <form className="code__form" onSubmit={handleSubmit()}>
+        <form className="code__form" onSubmit={handleSubmit(onSubmit)}>
           {fields.map((item, idx) => (
             <TextArea
               label={item.label}
@@ -97,13 +98,16 @@ const NumbersCode = () => {
               error={errors[item.name]?.message}
               key={idx}
             />
+            
           ))}
+          <Button fluid>Проверить</Button>
         </form>
         <div className="code__answer">
           <h2>Ответ:</h2>
           {isValid && "Все отлично"}
         </div>
       </div>
+      
       <Answers
         casesList={[
           {
