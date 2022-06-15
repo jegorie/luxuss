@@ -5,9 +5,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import TextArea from "../../components/TextArea/TextArea";
 import "./RegZnak.scss";
 
-
 import Answers from "../../components/Answers/Answers";
 import getErrorKeysFromObjectYup from "../../utils/getErrorsKeysFromObjectYup";
+
+import { regionsList } from "../../regions";
 
 const validationSchema = yup
   .object({
@@ -15,9 +16,14 @@ const validationSchema = yup
       .string()
       .typeError("Введите пароль ")
       .required("Обязательное поле")
-      
       .test("stroka", "Не верный формат", (value) => {
-        return /^[АВЕКМНОРСТУХ]\d{3}(?<!000)[АВЕКМНОРСТУХ]{2}\d{2,3}$/.test(value);
+        return /^[АВЕКМНОРСТУХ]\d{3}(?<!000)[АВЕКМНОРСТУХ]{2}\d{2,3}$/.test(
+          value
+        );
+      })
+      .test("regions", "Не верный регион", (value) => {
+        const region = value.slice(6);
+        return regionsList.includes(region);
       }),
   })
   .required();
@@ -82,7 +88,7 @@ const RegZnak = () => {
             trigger: "stroka-textAreaRegZnak",
           },
         ]}
-        triggersList={[...getErrorKeysFromObjectYup(errors), ]}
+        triggersList={[...getErrorKeysFromObjectYup(errors)]}
       />
     </div>
   );
