@@ -3,14 +3,12 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-
 import Button from "../../components/Button/Button";
 import TextArea from "../../components/TextArea/TextArea";
 
 import "./Stroka.scss";
 import Answers from "../../components/Answers/Answers";
 import getErrorKeysFromObjectYup from "../../utils/getErrorsKeysFromObjectYup";
-
 
 function getNum(textAreaStroka) {
   const arr = textAreaStroka.split("/");
@@ -24,20 +22,26 @@ function getNum(textAreaStroka) {
   return "Введите строку вида N/M";
 }
 
-const validationSchema = yup
-  .object({
-    textAreaStroka: yup
-
-      .string()
-      .typeError("Введите строку вида N/M")
-      .required("Обязательное поле")
-      .test("stroka", "Строка N/M", (value) => {
-        return /^([1-9]\d)+\/([1-9]\d)+$/.test(value);
-      }),
-      
-      // .matches(/^\d+\/\d+$/, "Введите строку вида N/M"),
-  })
-  .required();
+const validationSchema = yup.object({
+  textAreaStroka: yup
+    .string()
+    .required("Обязательное поле")
+    .test("devider", "Строка должна содержать разделитель", (value) => {
+      return /\//.test(value);
+    })
+    .test("tooMany", "Только один разделитель", (value) => {
+      return value.split("/").length === 2;
+    })
+    .test("n-int", "N должна содержать только цифры", (value) => {
+      return /^[0-9]+$/.test(value.split("/")[0]);
+    })
+    .test("m-int", "M должна содержать только цифры", (value) => {
+      return /^[0-9]+$/.test(value.split("/")[1]);
+    })
+    .test("stroka", "Введите строку вида N/M", (value) => {
+      return /^([1-9](\d)?)+\/([1-9](\d)?)+$/.test(value);
+    }),
+});
 
 const fields = [
   {
