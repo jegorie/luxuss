@@ -78,8 +78,8 @@ const Numbers = () => {
       <Answers
         casesList={[
           {
-            text: "Не цифры",
-            trigger: "typeError-TextAreaNumbers",
+            text: "Вы ввели 0",
+            trigger: "stroka-TextAreaNumbers",
           },
           {
             text: "Не целое",

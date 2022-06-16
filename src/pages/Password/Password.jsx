@@ -30,11 +30,22 @@ const validationSchema = yup
       .string()
       .typeError("Введите пароль")
       .required("Обязательное поле")
+      .test("lenght", "Пароль должен быть от 8 до 15", (value) => {
+        return value.length >= 8  && value.length <= 15;
+      })
+      .test("numbers", "Отсутсвуют цифры", (value) => {
+        return (/[0-9]/).test(value);
+      })
+      .test("upperLetters", "Отсутсвуют заглавные буквы", (value) => {
+        return (/[A-Z]/).test(value);
+      })
+      
       .test("stroka", "Пароль не подходит", (value) => {
-        return /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$/.test(
+        return /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,16}$/.test(
           value
         );
-      }),
+      })
+      ,
   })
   .required();
 
@@ -120,8 +131,16 @@ const Numbers = () => {
             trigger: "stroka-textAreaPassword",
           },
           {
-            text: "Длинна меньше 8",
+            text: "Длинна меньше 8 и не больше 15",
             trigger: "lenght-textAreaPassword",
+          },
+          {
+            text: "Отсутствуют цифры ",
+            trigger: "numbers-textAreaPassword",
+          },
+          {
+            text: "Отсутствуют заглавные буквы ",
+            trigger: "upperLetters-textAreaPassword",
           },
         ]}
         triggersList={[...getErrorKeysFromObjectYup(errors)]}

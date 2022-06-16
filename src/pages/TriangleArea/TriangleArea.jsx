@@ -139,7 +139,7 @@ const TriangleArea = () => {
     trigger,
     formState: { errors, isValid },
   } = useForm({
-    mode: "onBlur",
+    mode: "onSubmit",
     resolver: yupResolver(validationSchema),
     defaultValues: {
       sideA: "",
