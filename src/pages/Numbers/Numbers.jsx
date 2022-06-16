@@ -19,8 +19,13 @@ const validationSchema = yup
       .number()
       .required("Обязательное поле")
       .typeError("Введите число без букв")
-      
       .integer("Введите целое число")
+      .test("stroka", "Число не может быть 0", (value) => {
+        return /^[1-9]\d+$/.test(
+          value
+        );
+      })
+      
       .min(-5636345365, "Слишком маленькое число")
       .max(768574745959859, "Слишком большое число"),
   })
@@ -44,7 +49,7 @@ const Numbers = () => {
     watch,
     formState: { errors },
   } = useForm({
-    mode: "onBlur",
+    mode: "onSubmit",
     resolver: yupResolver(validationSchema),
     defaultValues: {
       sideA: "",
@@ -81,8 +86,8 @@ const Numbers = () => {
       <Answers
         casesList={[  
           {
-            text: "Не цифры",
-            trigger: "typeError-TextAreaNumbers",
+            text: "Вы ввели 0",
+            trigger: "stroka-TextAreaNumbers",
           },
           {
             text: "Не целое",
