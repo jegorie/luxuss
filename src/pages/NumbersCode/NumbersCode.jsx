@@ -3,46 +3,47 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-
 import TextArea from "../../components/TextArea/TextArea";
 
 import "./NumbersCode.scss";
 import Answers from "../../components/Answers/Answers";
 import getErrorKeysFromObjectYup from "../../utils/getErrorsKeysFromObjectYup";
+import Button from "../../components/Button/Button";
 
-const validationSchema = yup
-  .object({
-    textAreaCode: yup
-      .number()
-      .required("Обязательное поле")
-      .typeError("Введите 10 цифр")
-     
-      .test("check", "Контрольное число не верное", (value) => {
-        if (!value) {
-          return true;
+const validationSchema = yup.object({
+  textAreaCode: yup
+    .string()
+    .required("Обязательное поле")
+    .test("onlynum", "Введите число", (value) => {
+      return /^-?[0-9]+$/.test(value);
+    })
+    .test("length", "Количство цифр должно быть 10", (value) => {
+      return value.length === 10;
+    })
+    .test("check", "Контрольное число не верное", (value) => {
+      if (!value) {
+        return true;
+      }
+
+      const string = value.toString();
+
+      if (string.length === 10) {
+        let array = string.slice(0, 9);
+
+        let sum = array.split("").reduce((acc, value) => {
+          return (acc += +value);
+        }, 0);
+
+        if (sum % 10 === 0) {
+          return string[9] === "0";
+        } else if (sum % 3 === 0) {
+          return string[9] === "1";
+        } else {
+          return string[9] === "9";
         }
-
-        const string = value.toString();
-        
-        if (string.length === 10) {
-         
-          let array = string.slice(0, 9);
-
-          let sum = array.split("").reduce((acc, value) => {
-            return (acc += +value);
-          }, 0);
-
-          if (sum % 10 === 0) {
-            return string[9] === "0";
-          } else if (sum % 3 === 0) {
-            return string[9] === "1";
-          } else {
-            return string[9] === "9";
-          }
-        }
-      }),
-  })
-  .required();
+      }
+    }),
+});
 
 const fields = [
   {
@@ -98,7 +99,6 @@ const NumbersCode = () => {
               error={errors[item.name]?.message}
               key={idx}
             />
-            
           ))}
           <Button fluid>Проверить</Button>
         </form>
@@ -107,7 +107,7 @@ const NumbersCode = () => {
           {isValid && "Все отлично"}
         </div>
       </div>
-      
+
       <Answers
         casesList={[
           {
@@ -118,11 +118,8 @@ const NumbersCode = () => {
             text: "Не цифры",
             trigger: "typeError-textAreaCode",
           },
-          
-          
-          
         ]}
-        triggersList={[...getErrorKeysFromObjectYup(errors), ]}
+        triggersList={[...getErrorKeysFromObjectYup(errors)]}
       />
     </div>
   );

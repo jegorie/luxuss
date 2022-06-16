@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-
 import Button from "../../components/Button/Button";
 import TextArea from "../../components/TextArea/TextArea";
 
@@ -11,18 +10,20 @@ import "./Numbers.styles.scss";
 import Answers from "../../components/Answers/Answers";
 import getErrorKeysFromObjectYup from "../../utils/getErrorsKeysFromObjectYup";
 
-function getTriangleType(TextAreaNumbers) {}
-
 const validationSchema = yup
   .object({
     TextAreaNumbers: yup
-      .number()
+      .string()
       .required("Обязательное поле")
-      .typeError("Введите число без букв")
-      
-      .integer("Введите целое число")
-      .min(-5636345365, "Слишком маленькое число")
-      .max(768574745959859, "Слишком большое число"),
+      .test("onlynum", "Введите число без букв", (value) => {
+        return /^-?[0-9]+$/.test(value);
+      })
+      .test("biggest", "Слишком большое число", (value) => {
+        return +value <= 768574745959859;
+      })
+      .test("lowest", "Слишком маленькое число", (value) => {
+        return +value >= -5636345365;
+      }),
   })
   .required();
 
@@ -37,7 +38,6 @@ const fields = [
 ];
 
 const Numbers = () => {
-  const [answer, setAnswer] = useState(null);
   const {
     register,
     handleSubmit,
@@ -51,8 +51,6 @@ const Numbers = () => {
     },
   });
   const fieldValues = watch();
-  const onSubmit = ({ TextAreaNumbers }) =>
-    setAnswer(getTriangleType(TextAreaNumbers));
 
   return (
     <div className="numbers">
@@ -63,7 +61,7 @@ const Numbers = () => {
         могут быть только цифры
       </p>
       <div className="numbers__content">
-        <form className="numbers__form" onSubmit={handleSubmit(onSubmit)}>
+        <form className="numbers__form" onSubmit={handleSubmit()}>
           {fields.map((item, idx) => (
             <TextArea
               label={item.label}
@@ -76,10 +74,9 @@ const Numbers = () => {
           ))}
           <Button fluid>Проверить</Button>
         </form>
-        
       </div>
       <Answers
-        casesList={[  
+        casesList={[
           {
             text: "Не цифры",
             trigger: "typeError-TextAreaNumbers",
@@ -96,11 +93,8 @@ const Numbers = () => {
             text: "Слишком маленькое",
             trigger: "min-TextAreaNumbers",
           },
-          
-          
-          
         ]}
-        triggersList={[...getErrorKeysFromObjectYup(errors), ]}
+        triggersList={[...getErrorKeysFromObjectYup(errors)]}
       />
     </div>
   );
