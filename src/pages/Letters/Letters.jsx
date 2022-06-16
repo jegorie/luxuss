@@ -67,6 +67,7 @@ const Letters = () => {
               key={idx}
             />
           ))}
+          <Button fluid>Проверить</Button>
         </form>
       </div>
       <Answers
