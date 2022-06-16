@@ -44,7 +44,7 @@ const Numbers = () => {
     watch,
     formState: { errors },
   } = useForm({
-    mode: "onBlur",
+    mode: "onSubmit",
     resolver: yupResolver(validationSchema),
     defaultValues: {
       sideA: "",

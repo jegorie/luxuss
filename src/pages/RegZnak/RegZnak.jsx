@@ -3,11 +3,8 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-
 import Button from "../../components/Button/Button";
 import TextArea from "../../components/TextArea/TextArea";
-
-
 
 import "./RegZnak.scss";
 
@@ -23,9 +20,12 @@ const validationSchema = yup
       .typeError("Введите пароль ")
       .required("Обязательное поле")
       .test("stroka", "Не верный формат", (value) => {
-        return /^[АВЕКМНОРСТУХ]\d{3}(?<!000)[АВЕКМНОРСТУХ]{2}\d{2,3}$/.test(
+        return /^[АВЕКМНОРСТУХABEKMHOPCTYX]\d{3}[АВЕКМНОРСТУХABEKMHOPCTYX]{2}\d{2,3}$/.test(
           value
         );
+      })
+      .test("noZeros", "Не верный диапазон", (value) => {
+        return value.slice(1, 4) !== "000";
       })
       .test("regions", "Не верный регион", (value) => {
         const region = value.slice(6);
