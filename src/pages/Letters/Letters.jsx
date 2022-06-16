@@ -42,7 +42,7 @@ const Letters = () => {
     watch,
     formState: { errors },
   } = useForm({
-    mode: "onBlur",
+    mode: "onSubmit",
     resolver: yupResolver(validationSchema),
     defaultValues: {
       textAreaLetters: "",
@@ -71,6 +71,7 @@ const Letters = () => {
               key={idx}
             />
           ))}
+          <Button fluid>Проверить</Button>
         </form>
       </div>
       <Answers

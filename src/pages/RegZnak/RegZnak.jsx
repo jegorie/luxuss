@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+
+
+import Button from "../../components/Button/Button";
 import TextArea from "../../components/TextArea/TextArea";
+
+
+
 import "./RegZnak.scss";
 
 import Answers from "../../components/Answers/Answers";
@@ -45,14 +51,14 @@ const RegZnak = () => {
     watch,
     formState: { errors },
   } = useForm({
-    mode: "onBlur",
+    mode: "onSubmit",
     resolver: yupResolver(validationSchema),
     defaultValues: {
       textAreaRegZnak: "",
     },
   });
   const fieldValues = watch();
-  const onSubmit = () => {};
+  const onSubmit = ({ textAreaRegZnak }) => {};
 
   return (
     <div className="znak">
@@ -75,6 +81,7 @@ const RegZnak = () => {
               key={idx}
             />
           ))}
+          <Button fluid>Проверить</Button>
         </form>
       </div>
       <Answers
