@@ -10,16 +10,13 @@ import "./Letters.scss";
 import Answers from "../../components/Answers/Answers";
 import getErrorKeysFromObjectYup from "../../utils/getErrorsKeysFromObjectYup";
 
-
 const validationSchema = yup
   .object({
     textAreaLetters: yup
       .string()
       .typeError("Введите буквы")
       .required("Обязательное поле")
-     // .matches(/^([а-яА-ЯёЁa-zA-Z])+$/, "Только буквы Русские или Латинские"),
-     
-     .test("stroka", "Только буквы Русские или Латинские", (value) => {
+      .test("stroka", "Только буквы Русские или Латинские", (value) => {
         return /^([а-яА-ЯёЁa-zA-Z])+$/.test(value);
       }),
   })
@@ -49,7 +46,6 @@ const Letters = () => {
     },
   });
   const fieldValues = watch();
-  const onSubmit = ({ textAreaLetters }) => {};
 
   return (
     <div className="letters">
@@ -60,7 +56,7 @@ const Letters = () => {
         могут быть только Русские или Латинские
       </p>
       <div className="letters__content">
-        <form className="letters__form" onSubmit={handleSubmit(onSubmit)}>
+        <form className="letters__form" onSubmit={handleSubmit()}>
           {fields.map((item, idx) => (
             <TextArea
               label={item.label}
@@ -85,7 +81,7 @@ const Letters = () => {
             trigger: "stroka-textAreaLetters",
           },
         ]}
-        triggersList={[...getErrorKeysFromObjectYup(errors), ]}
+        triggersList={[...getErrorKeysFromObjectYup(errors)]}
       />
     </div>
   );
